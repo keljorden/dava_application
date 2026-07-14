@@ -1,70 +1,21 @@
 import tkinter as tk
 from tkinter import ttk
 import pandas as pd
+from data_loader import load_dataset_from_system
+from data_preview import data_preview_left
+from layout import *
+from action import *
 
-data = pd.DataFrame({
+'''data = pd.DataFrame({
     "ID": [101, 102, 103, 104, 105, 106],
     "Name": ["Alice", "Bob", "Charlie", "David", "Eva", "Frank"],
     "Score": [88.5, 92.0, 79.3, 85.1, 91.4, 84.0],
     "Status": ["Active", "Active", "Pending", "Active", "Review", "Active"]
-})
-
-plot_type = ['scatter plot', 'line plot','hist plot', 'kde plot', 'ecdf plot', 'strip plot', 'swarm plot', 'box plot', 'violin plot', 'bar plot', 'point plot']
+}) '''
 
 
-# split windows vertically or horizontally 
-def split_window(root: str, dir: str = 'HORIZONTAL'):
-    if dir == 'HORIZONTAL':
-        split = ttk.PanedWindow(root, orient= tk.HORIZONTAL)
-    elif dir == 'VERTICAL':
-        split = ttk.PanedWindow(root, orient= tk.VERTICAL)
-    else: return 'Unsupported split attempted'
-    return split
-
-# create frame to add to the window
-def create_frame(window: str, **kwargs):
-    new_frame = ttk.Frame(window, **kwargs)
-    return new_frame
-
-# add frame to the parent window/frame
-def add_frame(parent_frame: str, child_frame: str, w: int = 1):
-    parent_frame.add(child_frame, weight= w)
-
-def data_preview_left(frame: str):
-    columns = list(data.columns)
-    tree = ttk.Treeview(frame, columns=columns, show="headings", height=5)
-
-# 3. Define the column headings and properties
-    for col in columns:
-        tree.heading(col, text=col)
-        tree.column(col, width=80, anchor=tk.CENTER)  # Adjust default width as needed
-
-# 4. Insert the rows from data.head(5)
-    for index, row in data.head(5).iterrows():
-        tree.insert("", tk.END, values=list(row))
-
-# 5. Add a Scrollbar for horizontal/vertical overflow (Optional but recommended)
-    scrollbar = ttk.Scrollbar(frame, orient=tk.VERTICAL, command=tree.yview)
-    tree.configure(yscrollcommand=scrollbar.set)
-
-# 6. Pack the table and scrollbar into the partition
-    tree.pack(fill=tk.BOTH, expand=True, padx=(10, 0), pady=5, side=tk.LEFT)
-    scrollbar.pack(fill=tk.Y, padx=(0, 10), pady=5, side=tk.RIGHT)
-
-def add_lable(frame: str, text: str, font =("Arial", 10, "bold"), **kwargs):
-    lbl = ttk.Label(frame, text = text, font = font, **kwargs)
-    return lbl
-
-def add_button(frame: str, text: str, command = None, **kwargs):
-    kwargs.setdefault("cursor", "hand2")
-    btn = ttk.Button(frame, text = text, command = command, **kwargs)
-    return btn
-
-def add_combobox(frame, values: list, textvariable: str, **kwargs):
-    kwargs.setdefault("state", "readonly")
-    cb = ttk.Combobox(frame, values=values, textvariable = textvariable, **kwargs)
-    cb.current(0)
-    return cb
+plot_type = ['scatter plot', 'line plot','hist plot', 
+             'kde plot', 'ecdf plot', 'strip plot', 'swarm plot', 'box plot', 'violin plot', 'bar plot', 'point plot']
 
 
 # 1. Initialize the main application window
@@ -98,17 +49,18 @@ add_frame(left_paned,bottom_left_frame)
 
 #Top-Left Partition
 add_lable(top_left_frame, text="File Controls").pack(pady = 5)
-data_load_btn = add_button(top_left_frame, text="Load File")
+data_load_btn = add_button(top_left_frame, text="Add Data", command=lambda: on_click_add_data(mid_left_frame))
 data_load_btn.pack(fill=tk.X, padx=10, pady=2)
 visualize_btn = add_button(top_left_frame, text="Visualize")
 visualize_btn.pack(fill=tk.X, padx=10, pady=2)
+
+#cb_frame = create_frame(top_left_frame, relief = tk.SUNKEN, height = 20)
+#add_frame(top_left_frame,cb_frame)
 plot_type_cb = add_combobox(top_left_frame, values = plot_type, textvariable = 'selected_plot')
 plot_type_cb.pack(fill=tk.X, padx=10, pady=2)
 
 #mid-left partition
 add_lable(mid_left_frame, text="Data Preview", font=("Arial", 10, "bold")).pack(pady=(10, 5), padx=10, anchor=tk.W)
-data_preview_left(mid_left_frame)
-
 
 #Populate Bottom-Left Partition
 add_lable(bottom_left_frame, text="Plot Controls").pack(pady=5)
