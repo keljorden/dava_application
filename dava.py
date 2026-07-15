@@ -3,16 +3,8 @@ from tkinter import ttk
 import pandas as pd
 from data_loader import load_dataset_from_system
 from data_preview import data_preview_left
-from layout import *
+from wrapper import *
 from action import *
-
-'''data = pd.DataFrame({
-    "ID": [101, 102, 103, 104, 105, 106],
-    "Name": ["Alice", "Bob", "Charlie", "David", "Eva", "Frank"],
-    "Score": [88.5, 92.0, 79.3, 85.1, 91.4, 84.0],
-    "Status": ["Active", "Active", "Pending", "Active", "Review", "Active"]
-}) '''
-
 
 plot_type = ['scatter plot', 'line plot','hist plot', 
              'kde plot', 'ecdf plot', 'strip plot', 'swarm plot', 'box plot', 'violin plot', 'bar plot', 'point plot']
@@ -37,7 +29,8 @@ add_frame(main_paned,left_paned, 1)
 right_frame = create_frame(main_paned, relief=tk.SUNKEN, width=450)
 add_frame(main_paned,right_frame, 2)
 
-# 5. Create Top and Bottom frames inside the Left PanedWindow
+# 5. Create Top, Mid and Bottom frames inside the Left PanedWindow
+
 top_left_frame = create_frame(left_paned, relief=tk.SUNKEN, height=150)
 mid_left_frame  = create_frame(left_paned, relief=tk.SUNKEN, height=150)
 bottom_left_frame = create_frame(left_paned, relief=tk.SUNKEN, height=250)
@@ -48,16 +41,24 @@ add_frame(left_paned,mid_left_frame)
 add_frame(left_paned,bottom_left_frame)
 
 #Top-Left Partition
-add_lable(top_left_frame, text="File Controls").pack(pady = 5)
-data_load_btn = add_button(top_left_frame, text="Add Data", command=lambda: on_click_add_data(mid_left_frame))
-data_load_btn.pack(fill=tk.X, padx=10, pady=2)
-visualize_btn = add_button(top_left_frame, text="Visualize")
-visualize_btn.pack(fill=tk.X, padx=10, pady=2)
 
-#cb_frame = create_frame(top_left_frame, relief = tk.SUNKEN, height = 20)
-#add_frame(top_left_frame,cb_frame)
-plot_type_cb = add_combobox(top_left_frame, values = plot_type, textvariable = 'selected_plot')
-plot_type_cb.pack(fill=tk.X, padx=10, pady=2)
+# Configure Column Weights (Ratio 1 : 3) 
+top_left_frame.grid_columnconfigure(1, weight=1)
+top_left_frame.grid_columnconfigure(0, weight=3)
+
+add_lable(top_left_frame, text="File Controls").grid( row=0, column=0, columnspan=2, pady=5)
+
+data_load_btn = add_button(top_left_frame, text="Add Data", command=lambda: on_click_add_data(mid_left_frame))
+data_load_btn.grid(row=1, column=0, columnspan=2, sticky="ew", padx=10, pady=2)
+
+visualize_btn = add_button(top_left_frame, text="Visualize")
+visualize_btn.grid(row=2, column=0, columnspan=2, sticky="ew", padx=10, pady=2)
+
+plot_type_cb = add_combobox(top_left_frame, values=plot_type, textvariable=selected_plot )
+plot_type_cb.grid(row=3, column=0, sticky="ew", padx=10, pady=2)
+
+select_plot_btn = add_button(top_left_frame, text="Select", command=lambda: on_click_select(bottom_left_frame, selected_plot))
+select_plot_btn.grid( row=3, column=1, sticky="ew", padx=(2,10), pady=2 )
 
 #mid-left partition
 add_lable(mid_left_frame, text="Data Preview", font=("Arial", 10, "bold")).pack(pady=(10, 5), padx=10, anchor=tk.W)
