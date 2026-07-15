@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 
 # split windows vertically or horizontally 
-def split_window(root: str, dir: str = 'HORIZONTAL'):
+def split_window(root, dir: str = 'HORIZONTAL'):
     if dir == 'HORIZONTAL':
         split = ttk.PanedWindow(root, orient= tk.HORIZONTAL)
     elif dir == 'VERTICAL':
@@ -11,20 +11,20 @@ def split_window(root: str, dir: str = 'HORIZONTAL'):
     return split
 
 # create frame to add to the window
-def create_frame(window: str, **kwargs):
+def create_frame(window, **kwargs):
     new_frame = ttk.Frame(window, **kwargs)
     return new_frame
 
 # add frame to the parent window/frame
-def add_frame(parent_frame: str, child_frame: str, w: int = 1):
+def add_frame(parent_frame, child_frame, w: int = 1):
     parent_frame.add(child_frame, weight= w)
 
 
-def add_lable(frame: str, text: str, font =("Arial", 10, "bold"), **kwargs):
+def add_lable(frame, text: str, font =("Arial", 10, "bold"), **kwargs):
     lbl = ttk.Label(frame, text = text, font = font, **kwargs)
     return lbl
 
-def add_button(frame: str, text: str, command = None, **kwargs):
+def add_button(frame, text: str, command = None, padx = 10, pady = 10, **kwargs):
     kwargs.setdefault("cursor", "hand2")
     btn = ttk.Button(frame, text = text, command = command, **kwargs)
     return btn
