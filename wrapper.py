@@ -16,8 +16,8 @@ def create_frame(window, **kwargs):
     return new_frame
 
 # add frame to the parent window/frame
-def add_frame(parent_frame, child_frame, w: int = 1):
-    parent_frame.add(child_frame, weight= w)
+def add_frame(parent_frame, child_frame, w: int = 1, **kwargs):
+    parent_frame.add(child_frame, weight= w, **kwargs)
 
 
 def add_lable(frame, text: str, font =("Arial", 10, "bold"), **kwargs):
@@ -34,3 +34,8 @@ def add_combobox(frame, values: list, textvariable: str, **kwargs):
     cb = ttk.Combobox(frame, values=values, textvariable = textvariable, **kwargs)
     cb.current(0)
     return cb
+
+def add_entry(frame, text: str):
+    var = tk.StringVar(value=text)
+    entry = ttk.Entry(frame, textvariable=var, state='readonly')
+    return entry
