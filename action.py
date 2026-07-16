@@ -4,13 +4,13 @@ import pandas as pd
 from data_loader import load_dataset_from_system
 from data_preview import data_preview_left
 from wrapper import *
+from data_desc import *
 
-def on_click_add_data(preview_frame):
+def on_click_add_data(preview_frame: tk.Widget, data_desc_frame: tk.Widget):
     df = load_dataset_from_system()
     if df is not None:
         data_preview_left(preview_frame, data=df)
-
-import tkinter as tk
+        describe_dataset(data_desc_frame, data=df)
 
 def on_click_select(bottom_left_frame, selected_plot):
     for widget in bottom_left_frame.winfo_children():
