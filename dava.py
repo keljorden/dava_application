@@ -6,8 +6,8 @@ from data_preview import data_preview_left
 from wrapper import *
 from action import *
 
-plot_type = ['scatter plot', 'line plot','hist plot', 
-             'kde plot', 'ecdf plot', 'strip plot', 'swarm plot', 'box plot', 'violin plot', 'bar plot', 'point plot']
+plot_type = ['scatter', 'line','hist', 
+             'kde', 'ecdf', 'strip', 'swarm', 'boxen', 'violin', 'bar ', 'point']
 
 
 # 1. Initialize the main application window
@@ -23,11 +23,12 @@ main_paned.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
 
 # 3. Left Partition
 left_paned = split_window(main_paned, 'VERTICAL')
-add_frame(main_paned,left_paned, 1)
+add_frame(main_paned,left_paned, 0)
+left_paned.config(width=350)
 
 # 4. Right Partition
 right_frame = create_frame(main_paned, relief=tk.SUNKEN, width=450)
-add_frame(main_paned,right_frame, 2)
+add_frame(main_paned,right_frame)
 
 # 5. Create Top, Mid and Bottom frames inside the Left PanedWindow
 
@@ -42,7 +43,7 @@ top_left_data_desc_frame = create_frame(top_left_paned, relief=tk.SUNKEN, height
 
 #Add them to the left vertical split
 add_frame(top_left_paned, top_left_file_control_frame, 0)
-add_frame(top_left_paned, top_left_data_desc_frame, 2)
+add_frame(top_left_paned, top_left_data_desc_frame)
 add_frame(left_paned,mid_left_frame)
 add_frame(left_paned,bottom_left_frame)
 
@@ -63,7 +64,7 @@ visualize_btn.grid(row=2, column=0, columnspan=2, sticky="ew", padx=10, pady=2)
 plot_type_cb = add_combobox(top_left_file_control_frame, values=plot_type, textvariable=selected_plot )
 plot_type_cb.grid(row=3, column=0, sticky="ew", padx=10, pady=2)
 
-select_plot_btn = add_button(top_left_file_control_frame, text="Select", command=lambda: on_click_select(bottom_left_frame, selected_plot))
+select_plot_btn = add_button(top_left_file_control_frame, text="Select", command=lambda: on_click_select(bottom_left_frame, selected_plot, data_load_btn_state['df']))
 select_plot_btn.grid( row=3, column=1, sticky="ew", padx=(2,10), pady=2 )
 
 #top_left_data_desc_frame
