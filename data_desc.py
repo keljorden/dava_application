@@ -3,8 +3,9 @@ from tkinter import ttk
 import pandas as pd
 from wrapper import *
 
+
 def describe_dataset(dataset_desc_frame: tk.Widget, data: pd.DataFrame):
-    # 1. Clear previous widgets
+    
     for widget in dataset_desc_frame.winfo_children():
         widget.destroy()
 
@@ -18,15 +19,15 @@ def describe_dataset(dataset_desc_frame: tk.Widget, data: pd.DataFrame):
         dataset_desc_frame.grid_columnconfigure(i, weight=1)
 
     col_label = add_lable(dataset_desc_frame, text='Column count:')
-    col_count = add_lable(dataset_desc_frame, text=str(data.shape[1]))  
+    col_count = add_lable(dataset_desc_frame, text=str(data.shape[1])) 
 
     row_label = add_lable(dataset_desc_frame, text='Row count:')
-    row_count = add_lable(dataset_desc_frame, text=str(data.shape[0]))  
+    row_count = add_lable(dataset_desc_frame, text=str(data.shape[0]))
 
     col_label.grid(row=0, column=0, sticky="ew", padx=10, pady=5)
-    col_count.grid(row=0, column=1, sticky="ew", padx=10, pady=5)
+    col_count.grid(row=0, column=1, sticky="w", padx=10, pady=5)
     row_label.grid(row=0, column=2, sticky="ew", padx=10, pady=5)
-    row_count.grid(row=0, column=3, sticky="ew", padx=10, pady=5)
+    row_count.grid(row=0, column=3, sticky="w", padx=10, pady=5)
 
     filter_label = add_lable(dataset_desc_frame, text='Select Column:')
     filter_cb = add_combobox(dataset_desc_frame, values=columns, textvariable=col_var)
@@ -48,9 +49,10 @@ def describe_dataset(dataset_desc_frame: tk.Widget, data: pd.DataFrame):
     na_percent_label = add_lable(dataset_desc_frame, text="0%")
 
     na_count_label_text.grid(row=3, column=0, sticky="ew", padx=10, pady=5)
-    na_count_label.grid(row=3, column=1, sticky="ew", padx=10, pady=5)
+    na_count_label.grid(row=3, column=1, sticky="w", padx=10, pady=5)
     na_percent_label_text.grid(row=3, column=2, sticky="ew", padx=10, pady=5)
-    na_percent_label.grid(row=3, column=3, sticky="ew", padx=10, pady=5)
+    na_percent_label.grid(row=3, column=3, sticky="w", padx=10, pady=5)
+
 
     def update_column_info(*args):
         selected_col = col_var.get()
@@ -68,6 +70,7 @@ def describe_dataset(dataset_desc_frame: tk.Widget, data: pd.DataFrame):
         
         na_count_label.config(text=na_count)
         na_percent_label.config(text=f"{na_percentage:.2f}%")
+
 
     filter_cb.bind("<<ComboboxSelected>>", update_column_info)
     
