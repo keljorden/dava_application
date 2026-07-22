@@ -32,7 +32,6 @@ def add_button(frame, text: str, command = None, padx = 10, pady = 10, **kwargs)
 def add_combobox(frame, values: list, textvariable: str, **kwargs):
     kwargs.setdefault("state", "readonly")
     cb = ttk.Combobox(frame, values=values, textvariable = textvariable, **kwargs)
-    cb.current(0)
     return cb
 
 def add_entry(frame, text: str):
