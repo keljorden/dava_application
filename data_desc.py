@@ -15,7 +15,7 @@ def describe_dataset(dataset_desc_frame: tk.Widget, data: pd.DataFrame):
     columns = list(data.columns)
     col_var = tk.StringVar(value=columns[0])
 
-    for i in range(4):
+    for i in range(3):
         dataset_desc_frame.grid_columnconfigure(i, weight=1)
 
     col_label = add_lable(dataset_desc_frame, text='Column count:')
@@ -25,22 +25,23 @@ def describe_dataset(dataset_desc_frame: tk.Widget, data: pd.DataFrame):
     row_count = add_lable(dataset_desc_frame, text=str(data.shape[0]))
 
     col_label.grid(row=0, column=0, sticky="ew", padx=10, pady=5)
-    col_count.grid(row=0, column=1, sticky="w", padx=10, pady=5)
-    row_label.grid(row=0, column=2, sticky="ew", padx=10, pady=5)
-    row_count.grid(row=0, column=3, sticky="w", padx=10, pady=5)
+    col_count.grid(row=0, column=1, columnspan = 2, sticky="w", padx=10, pady=5)
+
+    row_label.grid(row=1, column=0, sticky="ew", padx=10, pady=5)
+    row_count.grid(row=1, column=1, columnspan = 2, sticky="w", padx=10, pady=5)
 
     filter_label = add_lable(dataset_desc_frame, text='Select Column:')
     filter_cb = add_combobox(dataset_desc_frame, values=columns, textvariable=col_var)
 
-    filter_label.grid(row=1, column=0, sticky="ew", padx=(10, 2), pady=5)
-    filter_cb.grid(row=1, column=1, columnspan=3, sticky="ew", padx=(2, 10), pady=5)
+    filter_label.grid(row=2, column=0, sticky="ew", padx=(10, 2), pady=5)
+    filter_cb.grid(row=2, column=1, columnspan=2, sticky="ew", padx=(2, 10), pady=5)
 
     dtype_label = add_lable(dataset_desc_frame, text='Data type:')
     initial_dtype = str(data[columns[0]].dtype) 
     dtype_entry = add_entry(dataset_desc_frame, text=initial_dtype)
 
-    dtype_label.grid(row=2, column=0, sticky="ew", padx=(10, 2), pady=5)
-    dtype_entry.grid(row=2, column=1, columnspan=3, sticky="ew", padx=(2, 10), pady=5)
+    dtype_label.grid(row=3, column=0, sticky="ew", padx=(10, 2), pady=5)
+    dtype_entry.grid(row=3, column=1, columnspan=2, sticky="ew", padx=(2, 10), pady=5)
 
     na_count_label_text = add_lable(dataset_desc_frame, text='N/A Count:')
     na_count_label = add_lable(dataset_desc_frame, text="0")
@@ -48,10 +49,11 @@ def describe_dataset(dataset_desc_frame: tk.Widget, data: pd.DataFrame):
     na_percent_label_text = add_lable(dataset_desc_frame, text='N/A Percent:')
     na_percent_label = add_lable(dataset_desc_frame, text="0%")
 
-    na_count_label_text.grid(row=3, column=0, sticky="ew", padx=10, pady=5)
-    na_count_label.grid(row=3, column=1, sticky="w", padx=10, pady=5)
-    na_percent_label_text.grid(row=3, column=2, sticky="ew", padx=10, pady=5)
-    na_percent_label.grid(row=3, column=3, sticky="w", padx=10, pady=5)
+    na_count_label_text.grid(row=4, column=0, sticky="ew", padx=10, pady=5)
+    na_count_label.grid(row=4, column=1, columnspan = 2, sticky="w", padx=10, pady=5)
+
+    na_percent_label_text.grid(row=5, column=0, sticky="ew", padx=10, pady=5)
+    na_percent_label.grid(row=5, column=1, columnspan = 2, sticky="w", padx=10, pady=5)
 
 
     def update_column_info(*args):
