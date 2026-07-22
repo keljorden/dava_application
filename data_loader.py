@@ -18,8 +18,8 @@ def load_dataset_from_system():
     )
     
     if not file_path:
-        print("File selection cancelled by user.")
-        return None
+        messagebox.showwarning("Cancelled:\t","File selection cancelled by user.")
+        return
         
     try:
         #Extract the file extension to pick the correct pandas reader
